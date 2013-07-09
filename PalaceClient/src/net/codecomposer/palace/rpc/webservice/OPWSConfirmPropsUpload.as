@@ -11,9 +11,10 @@ package net.codecomposer.palace.rpc.webservice
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
-	
+		
 	import net.codecomposer.palace.model.PalaceConfig;
 	import net.codecomposer.palace.model.PalaceProp;
+	import net.codecomposer.palace.rpc.PalaceClient;
 	
 	// OPWS = Open Palace Web Service
 	public class OPWSConfirmPropsUpload extends EventDispatcher
@@ -21,6 +22,8 @@ package net.codecomposer.palace.rpc.webservice
 		private var _loader:URLLoader;
 		
 		private var _props:Array;
+		
+		private var client:PalaceClient = PalaceClient.getInstance();
 		
 		public function send(props:Array):void {
 			var requestDefs:Array = [];
@@ -31,7 +34,7 @@ package net.codecomposer.palace.rpc.webservice
 					requestDefs.push(requestDef);
 				}
 			}
-			var request:URLRequest = new URLRequest(PalaceConfig.webServiceURL + "/props/confirm_upload");
+			var request:URLRequest = new URLRequest("http://" + client.host + "/props/confirm_upload/");
 			request.contentType = 'application/json';
 			request.method = URLRequestMethod.POST;
 			request.requestHeaders = [

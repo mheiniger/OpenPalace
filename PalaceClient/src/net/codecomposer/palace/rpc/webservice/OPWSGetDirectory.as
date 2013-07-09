@@ -21,7 +21,7 @@ package net.codecomposer.palace.rpc.webservice
 		private var _props:Array;
 		
 		public function send():void {
-			var request:URLRequest = new URLRequest(PalaceConfig.webServiceURL + "/directory/get?content-type=application%2Fjson");
+			var request:URLRequest = new URLRequest(PalaceConfig.directoryURL + "/directory/get?content-type=application%2Fjson");
 			request.contentType = 'application/json';
 			request.method = URLRequestMethod.POST;
 			request.requestHeaders = [
