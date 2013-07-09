@@ -11,6 +11,7 @@ package net.codecomposer.palace.rpc.webservice
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
+	import flash.utils.ByteArray;
 	
 	import net.codecomposer.palace.model.PalaceConfig;
 	import net.codecomposer.palace.model.PalaceProp;
@@ -41,17 +42,23 @@ package net.codecomposer.palace.rpc.webservice
 				}
 				requestDefs.push(requestDef);
 			}
-			var request:URLRequest = new URLRequest(PalaceConfig.webServiceURL + "/props/get");
+			var request:URLRequest = new URLRequest("http://" + client.host + "/props/get/");
 			request.contentType = 'application/json';
 			request.method = URLRequestMethod.POST;
 			request.requestHeaders = [
 				new URLRequestHeader('Accept', 'application/json')
 			];
-			request.data = JSON.encode({
-				api_version: 1,
-				api_key: OPWSParameters.API_KEY,
-				props: requestDefs
-			});
+			
+			var compressedData:ByteArray = new ByteArray();
+			compressedData.writeUTFBytes(
+				JSON.encode({
+					api_version: 1,
+					api_key: OPWSParameters.API_KEY,
+					props: requestDefs
+				})
+			);
+			
+			request.data = compressedData.deflate();
 
 			_loader = new URLLoader();
 			_loader.dataFormat = URLLoaderDataFormat.TEXT;
