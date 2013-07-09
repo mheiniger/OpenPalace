@@ -34,7 +34,7 @@ package net.codecomposer.palace.rpc.webservice
 					requestDefs.push(requestDef);
 				}
 			}
-			var request:URLRequest = new URLRequest("http://" + client.host + "/props/confirm_upload/");
+			var request:URLRequest = new URLRequest("http://" + client.host + "/webservice/props/confirm_upload/");
 			request.contentType = 'application/json';
 			request.method = URLRequestMethod.POST;
 			request.requestHeaders = [

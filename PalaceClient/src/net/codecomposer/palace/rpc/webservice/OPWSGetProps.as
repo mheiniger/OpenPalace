@@ -42,7 +42,7 @@ package net.codecomposer.palace.rpc.webservice
 				}
 				requestDefs.push(requestDef);
 			}
-			var request:URLRequest = new URLRequest("http://" + client.host + "/props/get/");
+			var request:URLRequest = new URLRequest("http://" + client.host + "/webservice/props/get/");
 			request.contentType = 'application/json';
 			request.method = URLRequestMethod.POST;
 			request.requestHeaders = [

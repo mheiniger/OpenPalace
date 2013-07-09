@@ -8,7 +8,7 @@ package net.codecomposer.palace.model
 		}
 
 		public static var webServiceURL:String = "http://www.openpalace.org/webservice";
-		public static var directoryURL:String = "http://67.228.1.159";
+		public static var directoryURL:String = "http://pchat.org/webservice";
 		public static var numberPropsToCacheInRAM:int = 1000; 
 		public static var URIEncodeImageNames:Boolean = false;
 		public static var fadeBackgroundImages:Boolean = true;
