@@ -57,8 +57,9 @@ package net.codecomposer.palace.rpc.webservice
 					props: requestDefs
 				})
 			);
+			compressedData.deflate();
 			
-			request.data = compressedData.deflate();
+			request.data = compressedData;
 
 			_loader = new URLLoader();
 			_loader.dataFormat = URLLoaderDataFormat.TEXT;
