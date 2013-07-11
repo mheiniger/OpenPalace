@@ -12,6 +12,7 @@ package net.codecomposer.palace.rpc.webservice
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
 	import flash.utils.ByteArray;
+	import flash.utils.CompressionAlgorithm;
 	
 	import net.codecomposer.palace.model.PalaceConfig;
 	import net.codecomposer.palace.model.PalaceProp;
@@ -31,33 +32,35 @@ package net.codecomposer.palace.rpc.webservice
 			for each (var prop:PalaceProp in props) {
 				var requestDef:Object = {};
 				if (prop.asset.guid) {
-					requestDef['guid'] = prop.asset.guid;
+					requestDef['id'] = prop.asset.guid;
 				}
 				else {
-					requestDef['legacy_identifier'] = {
+					requestDef['id'] = prop.asset.id;
+					/*requestDef['legacy_identifier'] = {
 						id: prop.asset.id,
 						crc: prop.asset.crc,
 						originating_palace: client.host + ":" + client.port
-					}
+					}*/
 				}
 				requestDefs.push(requestDef);
 			}
-			var request:URLRequest = new URLRequest("http://" + client.host + "/webservice/props/get/");
+			var request:URLRequest = new URLRequest(client.mediaServer.replace(/\/$/, "") + "/webservice/props/get/");
 			request.contentType = 'application/json';
 			request.method = URLRequestMethod.POST;
 			request.requestHeaders = [
-				new URLRequestHeader('Accept', 'application/json')
+				new URLRequestHeader('Accept', 'application/json'),
+				new URLRequestHeader('Content-Encoding', 'deflate')
 			];
-			
+				
 			var compressedData:ByteArray = new ByteArray();
 			compressedData.writeUTFBytes(
 				JSON.encode({
 					api_version: 1,
-					api_key: OPWSParameters.API_KEY,
+					//api_key: OPWSParameters.API_KEY,
 					props: requestDefs
 				})
 			);
-			compressedData.deflate();
+			compressedData.compress(CompressionAlgorithm.ZLIB);
 			
 			request.data = compressedData;
 
